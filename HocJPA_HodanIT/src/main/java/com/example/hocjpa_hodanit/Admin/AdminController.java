@@ -4,10 +4,13 @@ import com.example.hocjpa_hodanit.Entity.Roles;
 import com.example.hocjpa_hodanit.Entity.User;
 import com.example.hocjpa_hodanit.Service.UploadFileService;
 import com.example.hocjpa_hodanit.Service.UserServiceI;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,13 +50,21 @@ public class AdminController {
     }
     @PostMapping ("/showform")
     public String show(
-            @ModelAttribute("user") User user,
+           @Valid @ModelAttribute("user") User user,
+            BindingResult UserBindingResult,
             @RequestParam("File") MultipartFile file
     ) throws IOException {
+        List<FieldError> fieldErrors=UserBindingResult.getFieldErrors();
+        for(FieldError error:fieldErrors){
+            System.out.println("Error: "+error.getField()+" --- "+error.getDefaultMessage());
+        }
+        if(UserBindingResult.hasErrors()){
+            return "Admin/User/formUser";
+        }
+
         String fileName= uploadFileService.uploadFile(file,"Avatar");
         user.setAvatar(fileName);
         user.setRoles(this.userServiceI.getRoleByName(user.getRoles().getName()));
-
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         userServiceI.save(user);
         return "redirect:/admin/user/show";

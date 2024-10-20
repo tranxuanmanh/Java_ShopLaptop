@@ -27,23 +27,38 @@
 
             <div class="mb-2">
             <label>Full name</label>
-                <input class="form-control" type="text" name="fullname" th:field="*{fullname}" >
+                <input class="form-control "  th:classappend="${#fields.hasErrors('fullname')} ? 'is-invalid'"  type="text" name="fullname" th:field="*{fullname}" >
+                <ul>
+                    <li th:each="err : ${#fields.errors('fullname')}" th:text="${err}" class="text-danger" />
+                </ul>
             </div>
             <div class="mb-2">
                 <label>Password</label>
-                <input class="form-control" type="text" name="password" th:field="*{password}" >
+                <input class="form-control " th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" type="text" name="password" th:field="*{password}" >
+                <ul>
+                    <li th:each="err : ${#fields.errors('password')}" th:text="${err}" class="text-danger" />
+                </ul>
             </div>
             <div class="mb-2">
                 <label>Email</label>
-                <input class="form-control" type="text" name="email" th:field="*{email}" required>
+                <input class="form-control " th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" type="text" name="email" th:field="*{email}" required>
+                <ul>
+                    <li th:each="err : ${#fields.errors('email')}" th:text="${err}" class="text-danger" />
+                </ul>
             </div>
             <div class="mb-2">
                 <label>Phone</label>
-                <input class="form-control" type="text" name="phone" th:field="*{phone}" required>
+                <input class="form-control " th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" type="text" name="phone" th:field="*{phone}" required>
+                <ul>
+                    <li th:each="err : ${#fields.errors('phone')}" th:text="${err}" class="text-danger" />
+                </ul>
             </div>
             <div class="mb-2">
                 <label>Address</label>
-                <input class="form-control" type="text" name="address" th:field="*{address}">
+                <input class="form-control" th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'" type="text" name="address" th:field="*{address}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('address')}" th:text="${err}" class="text-danger" />
+                </ul>
             </div>
             <div class="mb-2">
                 <label class="form-label">Role</label>

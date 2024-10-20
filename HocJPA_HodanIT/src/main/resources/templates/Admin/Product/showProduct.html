@@ -33,33 +33,47 @@
                      <td>
                          <label class="form-label">Name: </label>
                          <input class="form-control " type="text" name="name" th:field="*{name}" />
+                         <ul>
+                             <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="text-danger" />
+                         </ul>
                      </td>
                      <td>
                          <label class="form-label">Price: </label>
                          <input class="form-control" type="text" name="price"  th:field="*{price}"/>
+                         <ul>
+                             <li th:each="err : ${#fields.errors('price')}" th:text="${err}" class="text-danger" />
+                         </ul>
                      </td>
                  </tr>
                  <tr>
                      <td colspan="2">
                     <label>Details product</label>
                          <textarea class="form-control" name="details" th:field="*{detailDesc}"></textarea>
+                         <ul>
+                             <li th:each="err : ${#fields.errors('detailDesc')}" th:text="${err}" class="text-danger" />
+                         </ul>
                      </td>
                  </tr>
                  <tr>
                      <td>
                          <label class="form-label">Short Decription</label>
                          <input type="text" class="form-control" name="shortDetails" th:field="*{shortDesc}">
+                         <ul>
+                             <li th:each="err : ${#fields.errors('shortDesc')}" th:text="${err}" class="text-danger" />
+                         </ul>
                      </td>
                      <td>
                          <label class="form-label">Quantity: </label>
                          <input type="text" class="form-control"  name="quantity" th:field="*{quantity}">
+                         <ul>
+                             <li th:each="err : ${#fields.errors('quantity')}" th:text="${err}" class="text-danger" />
+                         </ul>
                      </td>
                  </tr>
                  <tr>
                      <td>
                          <label class="form-label">Factory: </label>
-                        <select class="form-select" name="" th:field="*{factory}">
-
+                        <select class="form-select"  th:field="*{factory}">
                             <option value="dell">Dell</option>
                             <option value="hp">HP</option>
                             <option value="macbook">Macbook</option>
@@ -69,7 +83,7 @@
                      </td>
                      <td>
                          <label class="form-label">Target: </label>
-                         <select class="form-select" name="" th:field="*{target}">
+                         <select class="form-select"  th:field="*{target}">
 
                              <option value="laptop-gaming">Gaming</option>
                              <option value="laptop-code">Code</option>

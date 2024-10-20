@@ -1,6 +1,7 @@
 package com.example.hocjpa_hodanit.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="products")
@@ -8,19 +9,25 @@ public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotEmpty(message = "Khong duoc de trong ")
+    @Size(min=5,message="Toi thieu 5 ki tu")
     private String name;
+    @NotNull(message = "Khong duoc de trong")
+    @DecimalMin(value = "0",inclusive = false,message = "Price phai lon hon 0")
     private double price;
     private String image;
+    @NotEmpty(message = "Khong duoc de trong detail")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
+    @NotEmpty(message = "Khong duoc de trong shortDetail")
     private String shortDesc;
+    @Min(value = 2,message = "So luong nho nhat la 2")
     private int quantity;
     private int sold;
     private String factory;
     private String target;
 
     //CategoryId
-
-
 
     public Products() {
     }

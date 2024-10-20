@@ -1,6 +1,7 @@
 package com.example.hocjpa_hodanit.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -10,10 +11,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotEmpty(message = "Khong duoc de trong")
+    @Size(min=5,message = "Fullname phai co 3 ki tu")
     private String fullname;
+    @NotBlank(message = "Khong duoc de trong")
+    @Size(min=2,message = "Nhap toi thieu 2 chu so")
     private String password;
+    @Size(min=10,max = 11,message = "Nhap 10 chu so")
     private String phone;
+    @NotNull
+    @Size(min=2,message = "Address phai co it nhat 2 ki tu")
     private String address;
+    @Email(message = "Nhap dung kieu du lieu email",regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")
     private String email;
 
     private String avatar;

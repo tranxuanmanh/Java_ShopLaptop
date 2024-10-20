@@ -15,11 +15,14 @@ public class UploadFileService {
     }
     public String uploadFile(MultipartFile file,String foder) throws IOException {
         byte[] bytes=file.getBytes();
+        if(file.isEmpty()){
+            return " ";
+        }
         String fileName="";
         //Duong dan tuyet doi
 //       String rootPath = "D:/SpringMVC/HocJPA_HodanIT/src/main/resources/static/Image/Avatar";
         //Duong dan tuong doi
-        StringBuilder rootFile=new StringBuilder("src/main/resources/static/Image/");
+        StringBuilder rootFile=new StringBuilder("HocJPA_HodanIT/src/main/resources/static/Image/");
         //String rootPath="src/main/resources/static/Image/"+foder;
         File dir=new File(String.valueOf(rootFile.append(foder)));
         if(!dir.exists()) dir.mkdir();
