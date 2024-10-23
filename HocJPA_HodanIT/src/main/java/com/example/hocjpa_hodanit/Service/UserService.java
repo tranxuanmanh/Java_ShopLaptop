@@ -1,5 +1,6 @@
 package com.example.hocjpa_hodanit.Service;
 
+import com.example.hocjpa_hodanit.Entity.DTO.RegisterDTO;
 import com.example.hocjpa_hodanit.Entity.Roles;
 import com.example.hocjpa_hodanit.Entity.User;
 import com.example.hocjpa_hodanit.Repository.RoleRepository;
@@ -59,5 +60,20 @@ public class UserService implements UserServiceI {
     @Override
     public Roles getRoleByName(String name) {
         return roleRepository.findByName(name);
+    }
+
+    @Override
+    public User RegisterDTOtoUser(RegisterDTO registerDTO) {
+        User user=new User();
+        user.setFullname(registerDTO.getFirstName()+" "+registerDTO.getLastName());
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(registerDTO.getPassword());
+        return user;
+
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return this.userRepository.existsByEmail(email);
     }
 }

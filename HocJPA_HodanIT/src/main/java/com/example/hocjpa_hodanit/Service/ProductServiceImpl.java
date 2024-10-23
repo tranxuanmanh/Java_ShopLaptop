@@ -34,10 +34,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductById(int id) {
         this.productRepository.deleteById(id);
     }
-    //Update 1 san pham
+
     @Override
-    public void updateProductById(int id) {
-        Products pro=productRepository.findById(id);
-        this.productRepository.saveAndFlush(pro);
+    public List<Products> getProductByName(String name) {
+        return this.productRepository.findAllByFactory(name);
     }
 }

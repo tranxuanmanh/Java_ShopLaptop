@@ -11,5 +11,5 @@ public interface ProductService {
     Products save(Products products);//Luu 1 san pham
     void deleteProductById(int id);//Xoa 1 san pham
 
-    void updateProductById(int id);//Update 1 san pham
+  List<Products> getProductByName(String name);//Tim kiem theo hang san xuat
 }

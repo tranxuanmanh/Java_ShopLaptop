@@ -1,5 +1,6 @@
 package com.example.hocjpa_hodanit.Service;
 
+import com.example.hocjpa_hodanit.Entity.DTO.RegisterDTO;
 import com.example.hocjpa_hodanit.Entity.Roles;
 import com.example.hocjpa_hodanit.Entity.User;
 
@@ -15,4 +16,7 @@ public interface UserServiceI {
     void updateUser(User us);
 
     Roles getRoleByName(String name);
+
+    User RegisterDTOtoUser(RegisterDTO registerDTO);
+    boolean checkEmail(String email);
 }

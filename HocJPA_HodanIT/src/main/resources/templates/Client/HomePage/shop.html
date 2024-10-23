@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -155,36 +155,15 @@
                 <div class="mb-3">
                   <h4>Danh muc san pham</h4>
                   <ul class="list-unstyled fruite-categorie">
-                    <li>
+                    <li th:each="item:${products}">
+
                       <div class="d-flex justify-content-between fruite-name">
-                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Macbooks</a>
-                        <span>(3)</span>
+                        <a href="#"><i class="fas fa-apple-alt me-2"></i>[[${item.factory}]]</a>
+                        <span>[[${item.quantity}]]</span>
                       </div>
+
                     </li>
-                    <li>
-                      <div class="d-flex justify-content-between fruite-name">
-                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Dell</a>
-                        <span>(5)</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex justify-content-between fruite-name">
-                        <a href="#"><i class="fas fa-apple-alt me-2"></i>HP</a>
-                        <span>(2)</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex justify-content-between fruite-name">
-                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Lenovo</a>
-                        <span>(8)</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex justify-content-between fruite-name">
-                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Linux</a>
-                        <span>(5)</span>
-                      </div>
-                    </li>
+
                   </ul>
                 </div>
               </div>
@@ -198,26 +177,11 @@
               <div class="col-lg-12">
                 <div class="mb-3">
                   <h4>Additional</h4>
-                  <div class="mb-2">
+                  <div th:each="item:${products}" class="mb-2">
                     <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                    <label for="Categories-1"> Dell</label>
+                    <label for="Categories-1"> [[${item.factory}]]</label>
                   </div>
-                  <div class="mb-2">
-                    <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                    <label for="Categories-2"> HP</label>
-                  </div>
-                  <div class="mb-2">
-                    <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                    <label for="Categories-3"> Macbook</label>
-                  </div>
-                  <div class="mb-2">
-                    <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                    <label for="Categories-4"> Lenovo</label>
-                  </div>
-                  <div class="mb-2">
-                    <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                    <label for="Categories-5"> Linux</label>
-                  </div>
+
                 </div>
               </div>
               <div class="col-lg-12">
@@ -280,7 +244,7 @@
                       </div>
                   </div>
                 <div class="d-flex justify-content-center my-4">
-                  <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
+                  <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">View More</a>
                 </div>
               </div>
               <div class="col-lg-12">
@@ -295,102 +259,25 @@
           </div>
           <div class="col-lg-9">
             <div class="row g-4 justify-content-center">
-              <div class="col-md-6 col-lg-6 col-xl-4">
+              <div th:each="item:${products}" class="col-md-6 col-lg-6 col-xl-4">
+                  <a th:href="@{/user/shopDetail(id=${item.getId()})}">
                 <div class="rounded position-relative fruite-item">
-                  <div class="fruite-img">
-                    <img src="https://cafefcdn.com/203337114487263232/2022/3/17/-16474770890061439971826.jpg" class="img-fluid w-100 rounded-top" alt="">
+                  <div class="fruite-img" th:with="proUrl='/Image/Product/' + ${item.getImage()}">
+                    <img th:src="@{${proUrl}}" class="img-fluid w-100 rounded-top" alt="">
                   </div>
-                  <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Laptop</div>
+                  <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">[[${item.factory}]]</div>
                   <div class="p-4  border-none rounded-bottom">
-                    <h5 class="text-info">Lenovo gaming S24</h5>
-                    <p>Hiện nay, nhu cầu chơi game giải trí sau những giờ học, giờ làm căng thẳng ngày càng tăng cao.</p>
+                    <h5 class="text-info">[[${item.name}]]</h5>
+                    <p>[[${item.shortDesc}]]</p>
                     <div class="d-flex justify-content-between flex-lg-wrap">
-                      <p class="text-dark fw-bold mb-0 mx-auto">20,000,000 VND</p>
+                      <p class="text-dark fw-bold mb-0 mx-auto">[[${item.price}]] VND</p>
                       <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary mx-auto mt-1"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                     </div>
                   </div>
                 </div>
+                  </a>
               </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="rounded position-relative fruite-item">
-                        <div class="fruite-img">
-                            <img src="https://cafefcdn.com/203337114487263232/2022/3/17/-16474770890061439971826.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                        <div class="p-4  border-none rounded-bottom">
-                            <h5 class="text-info">Lenovo gaming S24</h5>
-                            <p>Hiện nay, nhu cầu chơi game giải trí sau những giờ học, giờ làm căng thẳng ngày càng tăng cao.</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fw-bold mb-0 mx-auto">20,000,000 VND</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary mx-auto mt-1"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="rounded position-relative fruite-item">
-                        <div class="fruite-img">
-                            <img src="https://cafefcdn.com/203337114487263232/2022/3/17/-16474770890061439971826.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                        <div class="p-4  border-none rounded-bottom">
-                            <h5 class="text-info">Lenovo gaming S24</h5>
-                            <p>Hiện nay, nhu cầu chơi game giải trí sau những giờ học, giờ làm căng thẳng ngày càng tăng cao.</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fw-bold mb-0 mx-auto">20,000,000 VND</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary mx-auto mt-1"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="rounded position-relative fruite-item">
-                        <div class="fruite-img">
-                            <img src="https://cafefcdn.com/203337114487263232/2022/3/17/-16474770890061439971826.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                        <div class="p-4  border-none rounded-bottom">
-                            <h5 class="text-info">Lenovo gaming S24</h5>
-                            <p>Hiện nay, nhu cầu chơi game giải trí sau những giờ học, giờ làm căng thẳng ngày càng tăng cao.</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fw-bold mb-0 mx-auto">20,000,000 VND</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary mx-auto mt-1"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="rounded position-relative fruite-item">
-                        <div class="fruite-img">
-                            <img src="https://cafefcdn.com/203337114487263232/2022/3/17/-16474770890061439971826.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                        <div class="p-4  border-none rounded-bottom">
-                            <h5 class="text-info">Lenovo gaming S24</h5>
-                            <p>Hiện nay, nhu cầu chơi game giải trí sau những giờ học, giờ làm căng thẳng ngày càng tăng cao.</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fw-bold mb-0 mx-auto">20,000,000 VND</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary mx-auto mt-1"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="rounded position-relative fruite-item">
-                        <div class="fruite-img">
-                            <img src="https://cafefcdn.com/203337114487263232/2022/3/17/-16474770890061439971826.jpg" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                        <div class="p-4  border-none rounded-bottom">
-                            <h5 class="text-info">Lenovo gaming S24</h5>
-                            <p>Hiện nay, nhu cầu chơi game giải trí sau những giờ học, giờ làm căng thẳng ngày càng tăng cao.</p>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fw-bold mb-0 mx-auto">20,000,000 VND</p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary mx-auto mt-1"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
               <div class="col-12">
                 <div class="pagination d-flex justify-content-center mt-5">

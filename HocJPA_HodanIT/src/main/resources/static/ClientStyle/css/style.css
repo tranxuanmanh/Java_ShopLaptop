@@ -1,5 +1,8 @@
 
 /*** Spinner Start ***/
+body{
+    background-color: #f2d7f4;
+}
 #spinner {
     opacity: 0;
     visibility: hidden;

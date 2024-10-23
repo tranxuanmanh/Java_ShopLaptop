@@ -1,5 +1,6 @@
 package com.example.hocjpa_hodanit.Entity;
 
+import com.example.hocjpa_hodanit.Service.Validator.StrongPassword;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -15,7 +16,7 @@ public class User {
     @Size(min=5,message = "Fullname phai co 3 ki tu")
     private String fullname;
     @NotBlank(message = "Khong duoc de trong")
-    @Size(min=2,message = "Nhap toi thieu 2 chu so")
+   //@StrongPassword(message = "Nhap toi thieu 8 ki tu,chu hoa,chu thuong ,chu so")
     private String password;
     @Size(min=10,max = 11,message = "Nhap 10 chu so")
     private String phone;
