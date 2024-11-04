@@ -6,6 +6,9 @@ import com.example.hocjpa_hodanit.Entity.User;
 import com.example.hocjpa_hodanit.Service.ProductService;
 import com.example.hocjpa_hodanit.Service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -54,15 +58,56 @@ public class ClientController {
     public String login(){
         return "/Client/Auth/login";
     }
+    @PostMapping("/login")
+    public String dangnhap()
+    {
+        return "redirect:/home";
+    }
 
     @GetMapping("/home")
-    public String show(Model model){
+    public String show(Model model,
+                       @RequestParam(value="page" ,required = false, defaultValue = "1") Optional<String> page,
+                       @RequestParam(value = "name" ,required = false)Optional<String> name){
+
         List<Products> pros= service.getAllProduct();
         List<Products> dells=service.getProductByName("dell");
         List<Products> macbooks=service.getProductByName("macbook");
         List<Products> hps=service.getProductByName("hp");
         List<Products> gamings=service.getProductByName("gaming");
-        model.addAttribute("products",pros);
+        int pages=1;
+        try{
+            if(page.isPresent()){
+                pages=Integer.parseInt(page.get());
+            }else{
+                pages=1;
+            }
+        }catch (NumberFormatException ex){
+            pages=1;
+        }
+
+        int totalPage=0;
+        if(name.isPresent()) {
+            String Name = name.get();
+            Pageable pageable = PageRequest.of(pages-1, 2);
+            Page<Products> prs = this.service.pageProduct(Name, pageable);
+            List<Products> pros2 = prs.getContent();
+             totalPage=prs.getTotalPages();
+            model.addAttribute("products", pros2);
+            model.addAttribute("totalPage",totalPage);
+            int prev=pages-1;
+            int next=pages+1;
+            if(prev<0){
+                pages=1;
+            }
+            if(next>totalPage){
+                pages=totalPage;
+            }
+            model.addAttribute("prev",prev);
+            model.addAttribute("next",next);
+        }else{
+            model.addAttribute("products",pros);
+        }
+        model.addAttribute("page",pages);
         model.addAttribute("lstDell",dells);
         model.addAttribute("lstMac",macbooks);
         model.addAttribute("lstHp",hps);

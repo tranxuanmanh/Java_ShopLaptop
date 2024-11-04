@@ -6,6 +6,9 @@ import com.example.hocjpa_hodanit.Service.UploadFileService;
 import com.example.hocjpa_hodanit.Service.UserServiceI;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("admin/user")
@@ -37,10 +41,36 @@ public class AdminController {
     }
 
     @GetMapping("/show")
-    public String home(Model model){
-        List<User> listUser=userServiceI.getAllUser();
-        System.out.println(listUser);
+    public String home(Model model,
+                       @RequestParam(value = "page", required = false)  Optional<String> page ){
+      int pageN=1;
+        try{
+            if(page.isPresent()){
+                pageN=Integer.parseInt(page.get());
+            }else{
+                pageN=1;
+            }
+        }catch(NumberFormatException ex){
+            pageN=1;
+            ex.getMessage();
+        }
+        Pageable pageable= PageRequest.of(pageN-1,3);
+        Page<User> pageUser=userServiceI.getAllUser(pageable);
+        List<User> listUser=pageUser.getContent();
+        int totalPage=pageUser.getTotalPages();
+        int prev=pageN-1;
+        int next=pageN+1;
+        if(prev==0){
+            prev=1;
+        }
+        if(next>totalPage){
+            next=totalPage;
+        }
+        //System.out.println(listUser);
         model.addAttribute("listUser",listUser);
+        model.addAttribute("prev",prev);
+        model.addAttribute("next",next);
+        model.addAttribute("totalPage",totalPage);
         return "Admin/User/index";
     }
     @GetMapping("/create")

@@ -6,6 +6,8 @@ import com.example.hocjpa_hodanit.Entity.User;
 import com.example.hocjpa_hodanit.Repository.RoleRepository;
 import com.example.hocjpa_hodanit.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +30,8 @@ public class UserService implements UserServiceI {
     }
 
     @Override
-    public List<User> getAllUser() {
-        return this.userRepository.findAll();
+    public Page<User> getAllUser(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
     }
 
     @Override
@@ -75,5 +77,10 @@ public class UserService implements UserServiceI {
     @Override
     public boolean checkEmail(String email) {
         return this.userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 }

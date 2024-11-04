@@ -96,6 +96,19 @@
 
                 </table>
             </div>
+            <!--Page !-->
+
+            <nav aria-label="Page navigation example " class="w-100">
+                <ul class="pagination justify-content-center" >
+                    <li class="page-item" ><a class="page-link" th:href="@{|/admin/user/show?page=${prev}|}">Previous</a></li>
+                    <li th:each="i:${totalPage}"  class="page-item">
+                        <a class="page-link" th:href="@{|/admin/user/show?page=${i}|}">[[${i}]]</a>
+                    </li>
+
+                    <li class="page-item"><a class="page-link" th:href="@{|/admin/user/show?page=${next}|}">Next</a></li>
+                </ul>
+            </nav>
+
         </div>
     </div>
 </div>

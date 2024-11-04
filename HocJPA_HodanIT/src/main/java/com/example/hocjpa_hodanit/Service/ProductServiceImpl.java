@@ -3,6 +3,9 @@ package com.example.hocjpa_hodanit.Service;
 import com.example.hocjpa_hodanit.Entity.Products;
 import com.example.hocjpa_hodanit.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +41,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Products> getProductByName(String name) {
         return this.productRepository.findAllByFactory(name);
+    }
+
+    @Override
+    public Specification<Products> nameLike(String name) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.like(root.get("name"), "%" + name + "%");
+    }
+
+    @Override
+    public Page<Products> pageProduct(String name, Pageable pageable) {
+        return this.productRepository.findAll(this.nameLike(name),pageable);
     }
 }
